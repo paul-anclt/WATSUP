@@ -13,6 +13,11 @@ module.exports = {
       'watsup-title' : '#9B8EFF',
       'watsup-text' : '#D8D7E1',
       'watsup-text-white' : '#FFFFFF'
+    },
+    extend: {
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif'] 
+      }
     }
   }
 }
