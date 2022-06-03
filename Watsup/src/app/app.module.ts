@@ -11,7 +11,7 @@ import { TradingComponent } from './trading/trading.component';
   declarations: [
     AppComponent,
     NavbarComponent,
-    ProfileComponent
+    ProfileComponent,
     TradingComponent
   ],
   imports: [
