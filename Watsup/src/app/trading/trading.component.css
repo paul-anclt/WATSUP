@@ -8,4 +8,14 @@
   height: 100%;
 }
 
+.input {
+  height: 10%;
+}
 
+.label {
+  height: 10%;
+}
+
+.button {
+  height: 20%;
+}
