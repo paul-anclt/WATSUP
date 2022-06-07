@@ -21,7 +21,7 @@ const binanceClient = new Spot(binanceApiKey, binanceApiSecret, { baseURL: 'http
 // Get account information
 app.get('/binanceInfo', (req, res) => {
     binanceClient.account().then(response => {
-        binanceClient.logger.log(response.data,null,2)
+        binanceClient.logger.log(response.data)
         res.send(response.data)
     })
 })
@@ -32,10 +32,10 @@ app.get('/binanceOrder', (req, res) => {
         price: '350',
         quantity: 1,
         timeInForce: 'GTC'
-        }).then(response => {
-            binanceClient.logger.log(response.data)
-            res.send(response.data)
-        }).catch(error => binanceClient.logger.error(error))
+    }).then(response => {
+        binanceClient.logger.log(response.data)
+        res.send(response.data)
+    }).catch(error => binanceClient.logger.error(error))
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
