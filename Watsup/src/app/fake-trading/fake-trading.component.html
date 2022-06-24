@@ -1,0 +1,40 @@
+<div class="text-watsup-text-white">
+    <h3 class="text-watsup-title">Interface de faux trading</h3>
+    <div class="px-4 m-2">
+        <div class="grid grid-cols-2">
+            <h4>Mon solde de fausse monnaie {{fakeTradingService.sold}}$</h4>
+            <div>
+                <p>Ajouter de l'argent au solde</p>
+                <mat-form-field class="example-margin example-width" appearance="fill">
+                    <mat-label class="white">Somme</mat-label>
+                    <input matInput type="number" [(ngModel)]="valueAdd">
+                </mat-form-field>
+                <button mat-raised-button color="primary" (click)="addMoney()">Ajouter</button>
+            </div>
+        </div>
+
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Crypto</mat-label>
+            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addWallet()">Ajouter wallet</button>
+    </div>
+    <div class="px-4 m-2">
+        <h5>Vos faux wallets de cryptomonnaies</h5>
+        <div class="px-4 m-2"(click)="openTradingDialog(wallet)" *ngFor="let wallet of fakeTradingService.wallets">
+            <div class="grid grid-cols-2" *ngVar="findCurrencyInfo(wallet.currency.id) as info">
+                <img src="{{info.image}}"/>
+                <div class="px-4 text-justify">
+                    <h5>{{info.name}}</h5>
+                    <p>Price in USD: {{info.current_price}}</p>
+                    <p>Vos possessions: {{wallet.value}}{{info.symbol}} - {{wallet.value*info.current_price}}$</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
