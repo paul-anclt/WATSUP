@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TradingComponent } from './trading/trading.component';
+import { StatistiqueComponent } from './statistique/statistique.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent},
   {path: 'change_password', component: ChangePasswordComponent},
   {path: 'change_info', component: ChangeInfoComponent},
+  {path : 'statistique', component: StatistiqueComponent},
 ];
 
 @NgModule({
