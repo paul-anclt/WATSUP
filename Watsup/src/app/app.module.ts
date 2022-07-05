@@ -18,6 +18,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { StatistiqueComponent } from './statistique/statistique.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { StatistiqueComponent } from './statistique/statistique.component';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
