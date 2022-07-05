@@ -14,8 +14,10 @@ app.use(bp.urlencoded({ extended: true }))
 
 app.use(cors(corsOptions));
 
-const bcrypt = require('bcrypt')
-const { Client } = require('pg')
+const bcrypt = require('bcrypt');
+const { Client } = require('pg');
+import { KrakenPublic } from "./kraken";
+var krakenito = new KrakenPublic()
 
 const client = new Client({
     user: 'postgres',
@@ -128,6 +130,12 @@ app.post('/addConnection', async(req: any, res: any) => {
         values: [idPlateforme, idUser, publicToken, privateToken]
     })
     return res.json({ok:true});
+})
+
+app.get('/getAssetsInfo/:asset', async(req: any, res: any) => {
+    const asset = req.params.asset
+    var informations = await krakenito.getAssetsInfo(asset)
+    res.send(informations)
 })
 
 app.delete('/deleteConnection/:id',async (req: any, res: any) => {

@@ -19,7 +19,7 @@ class KrakenPublic {
     getAssetsInfo(asset, asset2 = "USD") {
         return __awaiter(this, void 0, void 0, function* () {
             const ticker = yield this.publicKraken.ticker({ pair: asset + asset2 });
-            console.log(ticker);
+            return ticker;
         });
     }
     ;

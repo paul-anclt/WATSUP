@@ -11,8 +11,6 @@ export class TradingService {
   }
 
   getAssetsInfo(asset: string) {
-    return this.http.post('http://localhost:3001/getAssetsInfo', {
-      asset: asset,
-    });
+    return this.http.get('http://localhost:3001/getAssetsInfo/'+ asset);
+    }
   }
-}
