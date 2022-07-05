@@ -2,10 +2,16 @@
     <p class="text-xl text-watsup-title mb-3">Bonjour Prénom Nom</p>
     <p class="text-watsup-text-white">Vous pouvez vous connecter aux différentes plateformes</p>
 
-    <div class="grid grid-rows-4 gap-4 mt-4 p-4">
+    <div class="grid gap-4 mt-4 p-4">
+      <div class="grid grid-cols-2 gap-2" *ngFor="let p of plateformeList">
+        <label class="text-watsup-text-white">{{p.nomplateforme}}</label>
+        <button type="button" (click)="openTokenDialog()" class="text-watsup-text-white bg-watsup-title font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Se connnecter</button>
+      </div>     
+      <!--
+
         <div class="grid grid-cols-2 gap-2">
             <label class="text-watsup-text-white">Binance</label>
-            <button type="button" class="text-watsup-text-white bg-watsup-title font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Se connnecter</button>
+            <button type="button" (click)="openTokenDialog()" class="text-watsup-text-white bg-watsup-title font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Se connnecter</button>
         </div>
         <div class="grid grid-cols-2 gap-2">
             <label class="text-watsup-text-white">Coinbase</label>
@@ -15,6 +21,7 @@
             <label class="text-watsup-text-white">Ftx</label>
             <button type="button" class="text-watsup-text-white bg-watsup-title font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Se connnecter</button>
         </div>
+        -->
     </div>
 
     <p class="text-watsup-text-white mb-3">Compte(s) déjà associée(s)</p>
