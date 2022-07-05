@@ -96,5 +96,50 @@ app.post('/register', async (req, res) => {
     
 })
 
+app.get('/userConnections/:id',async (req, res) => {
+    const idUser = req.params.id
+
+    const result = await client.query({
+        text: 'SELECT * FROM connecter WHERE iduser=$1',
+        values: [idUser]
+    })
+
+    res.json(result.rows)
+});
+
+app.get('/plateformes', async(req, res) => {
+    const result = await client.query({
+        text: 'SELECT * FROM plateforme'
+    })
+
+    res.json(result.rows)
+})
+
+app.post('/addConnection', async(req, res) => {
+    const idPlateforme = req.body.idPlateforme
+    const idUser = req.body.idUser
+    const publicToken = req.body.publicToken
+    const privateToken = req.body.privateToken
+
+    await client.query({
+        text: `INSERT INTO public.connecter(idplateforme, iduser, publictoken, privatetoken)
+            VALUES ($1, $2, $3, $4);
+    `,
+        values: [idPlateforme, idUser, publicToken, privateToken]
+    })
+    return res.json({ok:true});
+})
+
+app.delete('/deleteConnection/:id',async (req, res) => {
+    const id = req.params.id
+
+    const result = await client.query({
+        text: `DELETE FROM connecter
+        WHERE idConnecter=$1;`,
+        values: [id]
+    })
+
+    return res.json({ok:true});
+});
 
 module.exports = router
