@@ -1,3 +1,4 @@
 export interface DialogTokenData{
-    token:any;
+    publicToken:any;
+    privateToken:any;
 }

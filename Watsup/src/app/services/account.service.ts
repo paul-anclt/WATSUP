@@ -16,11 +16,16 @@ export class AccountService {
     return this.http.get('http://localhost:3001/userConnections/'+idUser);
   }
 
-  addConnection(idPlateforme: number, idUser: number, token: string){
+  addConnection(idPlateforme: number, idUser: number, publicToken: string, privateToken: string){
     return this.http.post('http://localhost:3001/addConnection',{
       idPlateforme: idPlateforme,
       idUser: idUser,
-      token: token
+      publicToken: publicToken,
+      privateToken: privateToken
     })
+  }
+
+  deleteConnection(idConnecter: number){
+    return this.http.delete('http://localhost:3001/deleteConnection/'+idConnecter);
   }
 }
