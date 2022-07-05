@@ -284,4 +284,4 @@ class KrakenAPI {
     }
 }
 
-export default { KrakenAPI, KrakenPublic };
+export { KrakenAPI, KrakenPublic };
