@@ -10,6 +10,9 @@ import { TradingComponent } from './trading/trading.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
+import { SettingsComponent } from './settings/settings.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangeInfoComponent } from './change-info/change-info.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { FormsModule } from '@angular/forms';
     ProfileComponent,
     TradingComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SettingsComponent,
+    ChangePasswordComponent,
+    ChangeInfoComponent
   ],
   imports: [
     BrowserModule,
