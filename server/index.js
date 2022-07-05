@@ -66,6 +66,10 @@ app.post('/login', async (req, res) => {
     }
 })
 
+app.get('/test', async (req, res) => {   
+    res.json("test")
+})
+
 app.post('/register', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
@@ -95,6 +99,5 @@ app.post('/register', async (req, res) => {
     return res.json({ok:true});
     
 })
-
 
 module.exports = router

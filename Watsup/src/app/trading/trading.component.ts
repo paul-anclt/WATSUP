@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TradingService } from '../services/trading.service';
 
 @Component({
   selector: 'app-trading',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TradingComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tradingService: TradingService, private route: Router) { }
 
   ngOnInit(): void {
+    this.test()
   }
-
+  test() {
+    this.tradingService.test().subscribe(response => {
+      console.log(response);
+    })
+  }
 }
