@@ -9,12 +9,8 @@ class KrakenPublic {
         this.publicKraken = new Kraken();
     }
 
-    async account() {
-        const { unixtime } = await this.publicKraken.time();
-        const { XXBT }     = await this.publicKraken.assets();
-        const ticker       = await this.publicKraken.ticker({ pair: "XXBTZUSD" })
-        console.log(unixtime)
-        console.log(XXBT)
+    async getAssetsInfo(asset: string, asset2: string = "USD") {
+        const ticker = await this.publicKraken.ticker({ pair: asset+asset2 })
         console.log(ticker)
     };
 }
