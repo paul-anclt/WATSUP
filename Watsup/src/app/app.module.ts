@@ -17,6 +17,7 @@ import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
+import { StatistiqueComponent } from './statistique/statistique.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
     RegisterComponent,
     SettingsComponent,
     ChangePasswordComponent,
-    ChangeInfoComponent
+    ChangeInfoComponent,
+    StatistiqueComponent
   ],
   imports: [
     BrowserModule,
