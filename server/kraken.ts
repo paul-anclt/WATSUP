@@ -11,7 +11,29 @@ class KrakenPublic {
 
     async getAssetsInfo(asset: string, asset2: string = "USD") {
         const ticker = await this.publicKraken.ticker({ pair: asset+asset2 })
-        console.log(ticker)
+        return ticker
+    };
+
+    async getOrderBook(asset: string, asset2: string = "USD", count?: number) {
+        var orders;
+        if (count) {
+            orders = await this.publicKraken.depth({ pair: asset+asset2, count: count })
+        }
+        else {
+            orders = await this.publicKraken.depth({ pair: asset+asset2 })
+        }
+        return orders
+    };
+
+    async getRecentTrades(asset: string, asset2: string = "USD", since?: string) {
+        var trades;
+        if (since) {
+            trades = await this.publicKraken.trades({ pair: asset+asset2, since: since })
+        }
+        else {
+            trades = await this.publicKraken.trades({ pair: asset+asset2 })
+        }
+        return trades
     };
 }
 
