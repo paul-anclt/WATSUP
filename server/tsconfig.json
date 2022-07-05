@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2017",
+  },
+  "exclude": [
+    "**/node_modules/**"
+  ]
+}

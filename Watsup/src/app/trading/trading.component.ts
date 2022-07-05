@@ -11,11 +11,13 @@ export class TradingComponent implements OnInit {
 
   constructor(private tradingService: TradingService, private route: Router) { }
 
+  public asset!: string;
+
   ngOnInit(): void {
-    this.test()
+    this.getAssetsInfo()
   }
-  test() {
-    this.tradingService.test().subscribe(response => {
+  getAssetsInfo() {
+    this.tradingService.getAssetsInfo(this.asset).subscribe(response => {
       console.log(response);
     })
   }

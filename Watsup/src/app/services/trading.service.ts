@@ -10,7 +10,9 @@ export class TradingService {
   constructor(private http: HttpClient) {
   }
 
-  test() {
-    return this.http.get('http://localhost:3001/test');
+  getAssetsInfo(asset: string) {
+    return this.http.post('http://localhost:3001/getAssetsInfo', {
+      asset: asset,
+    });
   }
 }

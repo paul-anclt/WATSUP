@@ -15,7 +15,10 @@ app.use(bp.urlencoded({ extended: true }))
 app.use(cors(corsOptions));
 
 const bcrypt = require('bcrypt')
-const { Client } = require('pg')
+const { Client } = require('pg');
+import {KrakenPublic} from './kraken';
+var krakenito = new KrakenPublic();
+
 
 const client = new Client({
     user: 'postgres',
@@ -66,10 +69,6 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.get('/test', async (req, res) => {   
-    res.json("test")
-})
-
 app.post('/register', async (req, res) => {
     const email = req.body.email
     const password = req.body.password
@@ -98,6 +97,12 @@ app.post('/register', async (req, res) => {
     })
     return res.json({ok:true});
     
+})
+
+app.get('/test', async (req:any, res:any) => {   
+    const asset = req.body.asset
+    console.log(krakenito.getAssetsInfo(asset))
+    return krakenito.getAssetsInfo(asset)
 })
 
 module.exports = router
