@@ -11,7 +11,7 @@ class KrakenPublic {
 
     async getAssetsInfo(asset: string, asset2: string = "USD") {
         const ticker = await this.publicKraken.ticker({ pair: asset+asset2 })
-        console.log(ticker)
+        return ticker
     };
 }
 
