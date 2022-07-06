@@ -17,6 +17,9 @@ import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
+import { FakeTradingComponent } from './fake-trading/fake-trading.component';
+import { VarDirective } from './directives/ng-var.directive';
+import { FakeTradingDialogComponent } from './dialog/fake-trading-dialog/fake-trading-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
     RegisterComponent,
     SettingsComponent,
     ChangePasswordComponent,
-    ChangeInfoComponent
+    ChangeInfoComponent,
+    FakeTradingComponent,
+    VarDirective,
+    FakeTradingDialogComponent,
   ],
   imports: [
     BrowserModule,

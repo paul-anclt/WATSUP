@@ -43,9 +43,9 @@ export class AccountComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
       tokens = result;
-      console.log(tokens);
+      //console.log(tokens);
 
       this.addConnection(idPlateforme, this.userService.user.id, tokens.publicToken, tokens.privateToken)
     });

@@ -7,6 +7,7 @@
     "node-kraken-api": "^2.2.2",
     "pg": "^8.7.3",
     "ts-node": "^10.8.2",
+    "xhr2": "^0.2.1"
     "@binance/connector": "^1.10.0"
   },
   "devDependencies": {
