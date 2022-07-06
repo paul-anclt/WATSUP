@@ -207,25 +207,38 @@
                 Updated
             </div>
             <div class="font-poppins text-watsup-title font-semibold w-5/12">
-                Change
+                Volume
             </div>
             <div class="font-poppins text-watsup-title font-semibold w-2/12">
                 Price
             </div>
         </div>
-        <div class="flex mt-10">
+        <div class="flex mt-2">
             <div class="font-poppins text-watsup-text-secondary  w-8/12 ">
                 Bitcoin (BTC)
             </div>
             <div class="font-poppins text-watsup-text-secondary  w-5/12">
                 1 minute ago
             </div>
-            <div class="font-poppins text-red-500 w-5/12 flex items-center">
-                <img class="mr-1" src="assets/images/Dashboard/minus_arrow.svg">
-                1.37%
+            <div class="font-poppins text-red-500 w-5/12 flex items-center text-watsup-text-secondary">
+                {{res.v[1]}}
             </div>
-            <div class="font-poppins text-watsup-text-secondary w-2/12">
-                USD $40811,70
+            <div class="font-poppins text-watsup-text-secondary w-3/12">
+                USD ${{res.c[0]}}
+            </div>
+        </div>
+        <div class="flex mt-2">
+            <div class="font-poppins text-watsup-text-secondary  w-8/12 ">
+                Ethereum(ETH)
+            </div>
+            <div class="font-poppins text-watsup-text-secondary  w-5/12">
+                1 minute ago
+            </div>
+            <div class="font-poppins text-red-500 w-5/12 flex items-center text-watsup-text-secondary">
+                {{res2.v[1]}}
+            </div>
+            <div class="font-poppins text-watsup-text-secondary w-3/12">
+                USD ${{res2.c[0]}}
             </div>
         </div>
     </div>
