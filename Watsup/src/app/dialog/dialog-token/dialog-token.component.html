@@ -1,0 +1,16 @@
+<div>
+    <div>
+        <mat-form-field class="example-margin example-width" appearance="fill">
+            <mat-label>Token publique</mat-label>
+            <input matInput type="text" [(ngModel)]="data.publicToken">
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field class="example-margin example-width" appearance="fill">
+            <mat-label>Token privé</mat-label>
+            <input matInput type="text" [(ngModel)]="data.privateToken">
+        </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data">Valider</button>
+</div>
