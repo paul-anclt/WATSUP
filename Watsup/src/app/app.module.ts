@@ -18,6 +18,14 @@ import { SettingsComponent } from './settings/settings.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangeInfoComponent } from './change-info/change-info.component';
 
+import { FakeTradingComponent } from './fake-trading/fake-trading.component';
+import { VarDirective } from './directives/ng-var.directive';
+import { FakeTradingDialogComponent } from './dialog/fake-trading-dialog/fake-trading-dialog.component';
+
+import { StatistiqueComponent } from './statistique/statistique.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +39,14 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
     RegisterComponent,
     SettingsComponent,
     ChangePasswordComponent,
-    ChangeInfoComponent
+    ChangeInfoComponent,
+
+    FakeTradingComponent,
+    VarDirective,
+    FakeTradingDialogComponent,
+
+    StatistiqueComponent
+
   ],
   imports: [
     BrowserModule,
@@ -40,7 +55,8 @@ import { ChangeInfoComponent } from './change-info/change-info.component';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

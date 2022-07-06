@@ -23,3 +23,14 @@
     background: #c0a0b9;
   }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-form-field-empty.mat-form-field-label {
+  color: white;
+}
+
+.mat-form-field-underline {
+  background-color: white;
+}

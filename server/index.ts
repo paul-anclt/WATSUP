@@ -3,6 +3,7 @@ const router = express.Router()
 const app = express();
 const cors = require('cors');
 const bp = require('body-parser')
+var XMLHttpRequest = require('xhr2');
 
 var corsOptions = {
     origin: 'http://localhost:4200',
@@ -16,8 +17,9 @@ app.use(cors(corsOptions));
 
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
-import { KrakenPublic } from "./kraken";
+import { KrakenAPI, KrakenPublic } from "./kraken";
 var krakenito = new KrakenPublic()
+var krakenita = new KrakenAPI("key","secret")
 
 const client = new Client({
     user: 'postgres',
@@ -138,6 +140,12 @@ app.get('/getAssetsInfo/:asset', async(req: any, res: any) => {
     res.send(informations)
 })
 
+app.get('/getOrderBook/:asset', async(req: any, res: any) => {
+    const asset = req.params.asset
+    var orderBook = await krakenito.getOrderBook(asset,undefined, 5)
+    res.send(orderBook)
+})
+
 app.delete('/deleteConnection/:id',async (req: any, res: any) => {
     const id = req.params.id
 
@@ -149,5 +157,106 @@ app.delete('/deleteConnection/:id',async (req: any, res: any) => {
 
     return res.json({ok:true});
 });
+
+app.get('/getFakeWalletsOfUser/:id',async (req : any,res : any) => {
+    const idUser = req.params.id
+    const result = await client.query({
+        text: `SELECT * FROM wallet_virtuel WHERE idUser = $1`,
+        values: [idUser]
+    })
+    return res.json(result.rows);
+})
+
+app.post('/createFakeWallet',async (req : any, res : any) => {
+    const montant = 0
+    const idUser = req.body.idUser
+    const devise = req.body.devise
+
+    const result = await client.query({
+        text: `INSERT INTO public.wallet_virtuel(montant, devise, iduser)
+        VALUES ($1, $2, $3);`,
+        values: [montant, devise, idUser]
+    })
+    return res.json({ok:true});
+})
+
+app.post('/buy',async (req : any, res : any) => {
+    const montant = req.body.montant
+    const idWallet = req.body.idWallet
+    const devise = req.body.devise
+    var sold = req.body.sold
+
+    var Http = new XMLHttpRequest();
+    const url='https://api.coingecko.com/api/v3/coins/'+devise;
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onload = async(e :any) => {
+
+        const a = JSON.parse(Http.responseText)
+
+        const value_usd = a.market_data.current_price.usd*montant;
+        if( sold - value_usd >= 0 && montant > 0){
+            sold -= value_usd
+        //console.log(JSON.parse(Http.responseText).market_data.current_price.usd)
+            const result = await client.query({
+                text: `UPDATE wallet_virtuel
+                SET montant=montant+$1
+                WHERE idwallet = $2;`,
+                values: [montant, idWallet]
+            })
+        }
+
+        return res.json({sold: sold});
+    }
+})
+
+app.post('/sell',async (req : any, res : any) => {
+    const montant = req.body.montant
+    const idWallet = req.body.idWallet
+    const devise = req.body.devise
+    const walletSold = req.body.walletSold
+    var sold = req.body.sold
+
+    var Http = new XMLHttpRequest();
+    const url='https://api.coingecko.com/api/v3/coins/'+devise;
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onload = async(e:any) => {
+
+        const a = JSON.parse(Http.responseText)
+        const value_usd = a.market_data.current_price.usd*montant;
+        if( walletSold - montant >= 0 && montant > 0){
+            sold += value_usd
+        //console.log(JSON.parse(Http.responseText).market_data.current_price.usd)
+            const result = await client.query({
+                text: `UPDATE wallet_virtuel
+                SET montant=montant-$1
+                WHERE idwallet = $2;`,
+                values: [montant, idWallet]
+            })
+        }
+
+        return res.json({sold: sold});
+    }
+})
+
+app.post('/order', async(req: any, res: any) => {
+    const orderType = req.body.orderType
+    const type = req.body.type
+    const volume = req.body.volume
+    const pair = req.body.pair
+
+    krakenita.addOrder(orderType,type,volume,pair)
+    await client.query({
+        text: `INSERT INTO public.transaction(TypeOperation, TypeDevise, Montant, Date)
+            VALUES ($1, $2, $3, $4);
+    `,
+        values: [orderType, pair, volume, new Date()]
+    })
+
+    return res.json({ok:true});
+})
 
 module.exports = router
