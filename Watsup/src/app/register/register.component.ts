@@ -9,7 +9,9 @@ import { UserService } from '../services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  public username!: string;
+  public userlastname!: string;
+  public userfirstname!: string;
+  public useremail!: string;
   public password!: string;
 
 
@@ -19,7 +21,7 @@ export class RegisterComponent implements OnInit {
   }
 
   createUserWithAPI() {
-    this.userService.createUser(this.username, this.password).subscribe(response => {
+    this.userService.createUser(this.userlastname, this.userfirstname, this.useremail, this.password).subscribe(response => {
       this.route.navigate(['']);
     },
     error=>{

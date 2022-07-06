@@ -11,8 +11,10 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  createUser(email: string, password: string) {
+  createUser(nom: string, prenom: string, email: string, password: string) {
     return this.http.post('http://localhost:3001/register', {
+      nom: nom,
+      prenom: prenom,
       email: email,
       password: password
     });

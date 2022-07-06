@@ -33,6 +33,8 @@ app.listen(3001, function(){
 })
 
 app.post('/login', async (req, res) => {
+    const nom =''
+    const prenom=''
     const email = req.body.email
     const password = req.body.password
 
@@ -56,6 +58,8 @@ app.post('/login', async (req, res) => {
         //req.session.userId = user.id
         res.json({
             id: user.iduser,
+            nom: user.nom,
+            prenom: user.prenom,
             email: user.email
         })
     } else {
@@ -67,6 +71,8 @@ app.post('/login', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
+    const nom = req.body.nom
+    const prenom = req.body.prenom
     const email = req.body.email
     const password = req.body.password
 
@@ -87,10 +93,10 @@ app.post('/register', async (req, res) => {
     const hash = await bcrypt.hash(password, 10)
 
     await client.query({
-        text: `INSERT INTO utilisateur(email, password)
-    VALUES ($1, $2)
+        text: `INSERT INTO utilisateur(nom,prenom,email, password)
+    VALUES ($1, $2, $3, $4)
     `,
-        values: [email, hash]
+        values: [nom,prenom, email, hash]
     })
     return res.json({ok:true});
     

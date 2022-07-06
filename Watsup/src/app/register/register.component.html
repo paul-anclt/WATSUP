@@ -2,15 +2,21 @@
 <div id="container">
     <!-- zone de connexion -->
   
-    <form>
-      <h1>Inscription</h1>
-  
-      <label><b>Email</b></label>
-      <input type="text" placeholder="Entrer l'adresse mail'" [(ngModel)]="username" name="username" required>
-  
-      <label><b>Mot de passe</b></label>
-      <input type="password" placeholder="Entrer le mot de passe" [(ngModel)]="password" name="password" required>
-  
-      <button (click)="createUserWithAPI()">S'inscrire</button>
-    </form>
+  <form>
+    <h1>Inscription</h1>
+
+    <label><b>Nom</b></label>
+    <input type="text" placeholder="Entrer votre nom" [(ngModel)]="userlastname" name="userlastname" required>
+
+    <label><b>Prénom</b></label>
+    <input type="text" placeholder="Entrer votre prénom" [(ngModel)]="userfirstname" name="userfirstname" required>
+
+    <label><b>Email</b></label>
+    <input type="text" placeholder="Entrer l'adresse mail" [(ngModel)]="useremail" name="useremail" required>
+
+    <label><b>Mot de passe</b></label>
+    <input type="password" placeholder="Entrer le mot de passe" [(ngModel)]="password" name="password" required>
+
+    <button (click)="createUserWithAPI()">S'inscrire</button>
+  </form>
 </div>
