@@ -15,7 +15,9 @@ export class TradingComponent implements OnInit {
   res : any;
   asks : any;
   bids : any;
-  buyUSDValue : any = 0;
+  buyValue : any = 0;
+  sellValue : any = 0;
+
 
   constructor(private tradingService: TradingService, private route: Router) { }
 
@@ -46,6 +48,16 @@ export class TradingComponent implements OnInit {
       });
       console.log(this.asks);
       console.log(this.bids);
+    })
+  }
+  buy(){
+    this.tradingService.buy("buy","market",this.buyValue,"XETHZUSD").subscribe(response => {
+      console.log(response);
+    })
+  }
+  sell(){
+    this.tradingService.sell("sell","market",this.buyValue,"XETHZUSD").subscribe(response => {
+      console.log(response);
     })
   }
 }

@@ -48,16 +48,16 @@
       <label class="text-sm text-watsup-text-white inline label mb-5">Prix en USD</label>
       <input type="text" class="mb-5 bg-watsup-bg-main text-watsup-text-white input">
       <label class="text-sm text-watsup-text-white inline label mb-5">Montant en ETH</label>
-      <input type="text" class="mb-5 bg-watsup-bg-main text-watsup-text-white input">
-      <input type="submit" class="text-watsup-text-white text-sm border-watsup-bg-main border-4 rounded-md hover:bg-watsup-title button" value="Valider la transaction">
+      <input type="text" [(ngModel)]="buyValue" class="mb-5 bg-watsup-bg-main text-watsup-text-white input">
+      <input type="button" (click)="buy()" class="text-watsup-text-white text-sm border-watsup-bg-main border-4 rounded-md hover:bg-watsup-title button" value="Valider la transaction">
     </form>
     <label class="text-md text-watsup-text-white inline label justify-center mb-5">Vente</label>
     <form class="inline px-2">
       <label class="text-sm text-watsup-text-white inline label mb-5">Prix en USD</label>
       <input type="text" class="mb-5 bg-watsup-bg-main text-watsup-text-white input">
       <label class="text-sm text-watsup-text-white inline label mb-5">Montant en ETH</label>
-      <input type="text" class="mb-5 bg-watsup-bg-main text-watsup-text-white input">
-      <input type="submit" class="text-watsup-text-white text-sm border-watsup-bg-main border-4 rounded-md hover:bg-watsup-title button" value="Valider la transaction">
+      <input type="text" [(ngModel)]="sellValue" class="mb-5 bg-watsup-bg-main text-watsup-text-white input">
+      <input type="button" (click)="sell()" class="text-watsup-text-white text-sm border-watsup-bg-main border-4 rounded-md hover:bg-watsup-title button" value="Valider la transaction">
     </form>
   </div>
   <div class="basis-2/5 bg-watsup-bg-secondary overflow-y-scroll scrollbar">

@@ -16,8 +16,9 @@ app.use(cors(corsOptions));
 
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
-import { KrakenPublic } from "./kraken";
+import { KrakenAPI, KrakenPublic } from "./kraken";
 var krakenito = new KrakenPublic()
+var krakenita = new KrakenAPI("key","secret")
 
 const client = new Client({
     user: 'postgres',
@@ -155,5 +156,22 @@ app.delete('/deleteConnection/:id',async (req: any, res: any) => {
 
     return res.json({ok:true});
 });
+
+app.post('/order', async(req: any, res: any) => {
+    const orderType = req.body.orderType
+    const type = req.body.type
+    const volume = req.body.volume
+    const pair = req.body.pair
+
+    krakenita.addOrder(orderType,type,volume,pair)
+    await client.query({
+        text: `INSERT INTO public.transaction(TypeOperation, TypeDevise, Montant, Date)
+            VALUES ($1, $2, $3, $4);
+    `,
+        values: [orderType, pair, volume, new Date()]
+    })
+
+    return res.json({ok:true});
+})
 
 module.exports = router
