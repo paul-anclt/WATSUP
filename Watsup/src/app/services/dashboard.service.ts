@@ -11,4 +11,8 @@ export class DashboardService {
   getAssetsInfo(asset: string) {
     return this.http.get('http://localhost:3001/getAssetsInfo/'+ asset);
   }
+
+  userPlateformes(idUser: number) {
+    return this.http.get('http://localhost:3001/userPlateformes/'+idUser);
+  }
 }

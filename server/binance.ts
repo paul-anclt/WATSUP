@@ -1,5 +1,4 @@
 import { Spot } from "@binance/connector";
-
 class BinanceAPI {
     key: string;
     secret: string;
