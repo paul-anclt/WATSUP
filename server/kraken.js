@@ -23,6 +23,32 @@ class KrakenPublic {
         });
     }
     ;
+    getOrderBook(asset, asset2 = "USD", count) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var orders;
+            if (count) {
+                orders = yield this.publicKraken.depth({ pair: asset + asset2, count: count });
+            }
+            else {
+                orders = yield this.publicKraken.depth({ pair: asset + asset2 });
+            }
+            return orders;
+        });
+    }
+    ;
+    getRecentTrades(asset, asset2 = "USD", since) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var trades;
+            if (since) {
+                trades = yield this.publicKraken.trades({ pair: asset + asset2, since: since });
+            }
+            else {
+                trades = yield this.publicKraken.trades({ pair: asset + asset2 });
+            }
+            return trades;
+        });
+    }
+    ;
 }
 exports.KrakenPublic = KrakenPublic;
 // Private
