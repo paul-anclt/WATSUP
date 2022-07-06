@@ -27,13 +27,15 @@
     <div class="px-4 m-2">
         <h5>Vos faux wallets de cryptomonnaies</h5>
         <div class="px-4 m-2"(click)="openTradingDialog(wallet)" *ngFor="let wallet of fakeTradingService.wallets">
-            <div class="grid grid-cols-2" *ngVar="findCurrencyInfo(wallet.currency.id) as info">
-                <img src="{{info.image}}"/>
-                <div class="px-4 text-justify">
-                    <h5>{{info.name}}</h5>
-                    <p>Price in USD: {{info.current_price}}</p>
-                    <p>Vos possessions: {{wallet.value}}{{info.symbol}} - {{wallet.value*info.current_price}}$</p>
-                </div>
+            <div class="grid grid-cols-2" *ngVar="findCurrencyInfo(wallet.devise) as info">
+                <ng-container *ngIf="info != null">
+                    <img  style="max-width: 100px; max-height: 100px" src="{{info.image}}"/>
+                    <div class="px-4 text-justify">
+                        <h5>{{info.name}}</h5>
+                        <p>Price in USD: {{info.current_price}}</p>
+                        <p>Vos possessions: {{wallet.montant}}{{info.symbol}} - {{wallet.montant*info.current_price}}$</p>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>

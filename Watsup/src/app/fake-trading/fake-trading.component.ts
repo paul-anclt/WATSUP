@@ -5,7 +5,8 @@ import {map, startWith} from 'rxjs/operators';
 import { FakeTradingService } from '../services/fake-trading.service';
 import { debounceTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { FakeTradingDialogComponent } from '../diagol/fake-trading-dialog/fake-trading-dialog.component';
+import { FakeTradingDialogComponent } from '../dialog/fake-trading-dialog/fake-trading-dialog.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-fake-trading',
@@ -20,7 +21,7 @@ export class FakeTradingComponent implements OnInit {
   currenciesInfo: any = [];
   valueAdd;
 
-  constructor(public fakeTradingService: FakeTradingService, public dialog: MatDialog) { }
+  constructor(private userService: UserService,public fakeTradingService: FakeTradingService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -29,13 +30,24 @@ export class FakeTradingComponent implements OnInit {
       map(value => (typeof value === 'string' ? value : value?.name)),
       map(name => (name ? this._filter(name) : this.fakeTradingService.allCurrencies)),
     );
+    this.getWallets();
+  }
+
+  getWallets(){
+    this.fakeTradingService.getWallets(this.userService.user.id).subscribe(res =>{
+      this.fakeTradingService.wallets = res;
+      this.fakeTradingService.wallets.sort(function (a, b) { return a.idwallet - b.idwallet; });
+      this.getInformationCurrencies();
+    })
   }
 
   addWallet() {
-    console.log(this.myControl.value.id)
+    //console.log(this.myControl.value.id)
     if(this.myControl.value.id != null){
-      this.fakeTradingService.addWallet(this.myControl.value)
-      this.getInformationCurrencies();
+      this.fakeTradingService.addWallet(this.userService.user.id,this.myControl.value).subscribe(res => {
+        this.getWallets();
+      })
+
     }
   }
 
@@ -51,7 +63,8 @@ export class FakeTradingComponent implements OnInit {
   }
 
   findCurrencyInfo(id: string){
-    console.log(this.currenciesInfo.filter(x => x.id == id)[0])
+    //console.log(id);
+    //console.log(this.currenciesInfo)
     return this.currenciesInfo.filter(x => x.id == id)[0];
   }
 
@@ -62,7 +75,7 @@ export class FakeTradingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
       wallet = result;
     });
   }

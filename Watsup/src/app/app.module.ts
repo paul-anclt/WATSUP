@@ -19,7 +19,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ChangeInfoComponent } from './change-info/change-info.component';
 import { FakeTradingComponent } from './fake-trading/fake-trading.component';
 import { VarDirective } from './directives/ng-var.directive';
-import { FakeTradingDialogComponent } from './diagol/fake-trading-dialog/fake-trading-dialog.component';
+import { FakeTradingDialogComponent } from './dialog/fake-trading-dialog/fake-trading-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { FakeTradingDialogComponent } from './diagol/fake-trading-dialog/fake-tr
     RegisterComponent,
     SettingsComponent,
     ChangePasswordComponent,
-    ChangeInfoComponent
+    ChangeInfoComponent,
     FakeTradingComponent,
     VarDirective,
     FakeTradingDialogComponent,

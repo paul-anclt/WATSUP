@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogData } from 'src/app/interface/dialog-data.model';
 import { FakeTradingService } from 'src/app/services/fake-trading.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-fake-trading-dialog',
@@ -17,6 +18,7 @@ export class FakeTradingDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<FakeTradingDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public fakeTradingService: FakeTradingService,
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -33,13 +35,31 @@ export class FakeTradingDialogComponent implements OnInit {
 
     return value;
   }
+
+  getWallets(){
+    this.fakeTradingService.getWallets(this.userService.user.id).subscribe(res =>{
+      this.fakeTradingService.wallets = res;
+      this.fakeTradingService.wallets.sort(function (a, b) { return a.idwallet - b.idwallet; });
+    })
+  }
+
   buy(){
-    this.fakeTradingService.buyCurrency(this.data.wallet, this.valueBuy);
-    this.valueBuy =0;
+    this.fakeTradingService.buyCurrency(this.data.wallet, this.valueBuy).subscribe(res => {
+      var e = JSON.parse(JSON.stringify(res));
+      this.valueBuy =0;
+      this.fakeTradingService.sold = e.sold;
+      this.getWallets()
+      this.dialogRef.close()
+    });
   }
 
   sell(){
-    this.fakeTradingService.sellCurrency(this.data.wallet, this.valueSell);
-    this.valueSell =0;
+    this.fakeTradingService.sellCurrency(this.data.wallet, this.valueSell).subscribe(res => {
+      var e = JSON.parse(JSON.stringify(res));
+      this.valueBuy =0;
+      this.fakeTradingService.sold = e.sold;
+      this.getWallets()
+      this.dialogRef.close();
+    });
   }
 }

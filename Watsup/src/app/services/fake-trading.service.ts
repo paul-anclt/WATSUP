@@ -8,7 +8,7 @@ export class FakeTradingService {
 
   sold: number = 0;
 
-  wallets: any[] = [];
+  wallets: any;
   allCurrencies: any;
 
   constructor(private http: HttpClient) { 
@@ -19,31 +19,34 @@ export class FakeTradingService {
     this.sold += addMoney;
   }
 
-  addWallet(currency: any){
-    var idMax = Math.max.apply(Math, this.wallets.map((e) => { return e.id; }))+1 | 0;
-    var wallet = {id:idMax, currency: currency, value: 0};
-    this.wallets.push(wallet);
+  getWallets(idUser:number){
+    return this.http.get('http://localhost:3001/getFakeWalletsOfUser/'+idUser)
+  }
+
+  addWallet(idUser:number , currency: any){
+    return this.http.post('http://localhost:3001/createFakeWallet',{
+      idUser: idUser,
+      devise: currency.id
+    })
   }
 
   buyCurrency(wallet: any, ammount:number){
-    this.http.get<any>('https://api.coingecko.com/api/v3/coins/'+wallet.currency.id).subscribe(res => 
-    {
-      var value_usd = res.market_data.current_price.usd*ammount;
-      if( this.sold - value_usd >= 0){
-        this.sold -= value_usd;
-        wallet.value += ammount;
-      }
-    });
+    return this.http.post('http://localhost:3001/buy',{
+      montant: ammount,
+      idWallet: wallet.idwallet,
+      devise: wallet.devise,
+      sold: this.sold
+    })
   }
 
   sellCurrency(wallet: any, ammount:number){
-    this.http.get<any>('https://api.coingecko.com/api/v3/coins/'+wallet.currency.id).subscribe(res => 
-    {
-      if( wallet.value - ammount>=0) {
-        this.sold += res.market_data.current_price.usd*ammount;
-        wallet.value -= ammount;
-      }
-    });
+    return this.http.post('http://localhost:3001/sell',{
+      montant: ammount,
+      idWallet: wallet.idwallet,
+      devise: wallet.devise,
+      sold: this.sold,
+      walletSold: wallet.montant
+    })
   }
 
   getAllCurrencies() {
@@ -51,11 +54,7 @@ export class FakeTradingService {
   }
 
   getWalletsInformations() {
-    var walletCurrencies = this.wallets.map((w) => {return w.currency.id});
+    var walletCurrencies = this.wallets.map((w) => {return w.devise});
     return this.http.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+walletCurrencies.toString()+'&order=market_cap_desc&per_page=100&page=1&sparkline=false');
-  }
-
-  test(){
-    return null;
   }
 }

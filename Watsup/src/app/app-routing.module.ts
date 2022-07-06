@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'change_password', component: ChangePasswordComponent},
   {path: 'change_info', component: ChangeInfoComponent},
   { path: 'trading', component: TradingComponent},
+  { path: 'fake-trading', component: FakeTradingComponent},
 ];
 
 @NgModule({
