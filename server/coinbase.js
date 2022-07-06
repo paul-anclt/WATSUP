@@ -4,8 +4,8 @@
 // // npm install request
 // var request = require('request');
 // // Set these in your ENVironment, or enter them here with the actual string
-// var apiKey = 'kPy0MYfr6oTldlMs';
-// var apiSecret = 'uaxgYTtWGkwW7IqmagTYq6DpCb1s1wGL';
+// var apiKey = '';
+// var apiSecret = '';
 // //get unix time in seconds
 // var timestamp = Math.floor(Date.now() / 1000);
 // // set the parameter for the request message
