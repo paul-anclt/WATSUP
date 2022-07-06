@@ -14,7 +14,7 @@ module.exports = {
       'watsup-text' : '#D8D7E1',
       'watsup-text-white' : '#FFFFFF',
       'watsup-green' : 'rgb(34 197 94)',
-      'watsup-red' : 'color: rgb(185 28 28)'
+      'watsup-red' : 'rgb(185 28 28)'
     },
     extend: {
       colors:{

@@ -123,6 +123,11 @@ app.get('/getAssetsInfo/:asset', (req, res) => __awaiter(void 0, void 0, void 0,
     var informations = yield krakenito.getAssetsInfo(asset);
     res.send(informations);
 }));
+app.get('/getOrderBook/:asset', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const asset = req.params.asset;
+    var orderBook = yield krakenito.getOrderBook(asset, undefined, 5);
+    res.send(orderBook);
+}));
 app.delete('/deleteConnection/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const result = yield client.query({

@@ -151,8 +151,8 @@ class KrakenAPI {
      * Limit price for stop-loss-limit and take-profit-limit orders
      * @returns object (OrderAdded)
      */
-    async addOrder(orderType: string, type: string, volume: string, pair: string, price: string, price2: string) {
-        const order = await this.privateKraken.addOrder({ordertype: orderType, type: type, pair: pair, price: price, price2: price2});
+    async addOrder(orderType: string, type: string, volume: string, pair: string, price?: string, price2?: string) {
+        const order = await this.privateKraken.addOrder({ordertype: orderType, type: type, volume: volume, pair: pair, price: price, price2: price2});
         return order;
     }
 

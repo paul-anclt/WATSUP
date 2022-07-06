@@ -17,8 +17,9 @@ app.use(cors(corsOptions));
 
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
-import { KrakenPublic } from "./kraken";
+import { KrakenAPI, KrakenPublic } from "./kraken";
 var krakenito = new KrakenPublic()
+var krakenita = new KrakenAPI("key","secret")
 
 const client = new Client({
     user: 'postgres',
@@ -139,6 +140,12 @@ app.get('/getAssetsInfo/:asset', async(req: any, res: any) => {
     res.send(informations)
 })
 
+app.get('/getOrderBook/:asset', async(req: any, res: any) => {
+    const asset = req.params.asset
+    var orderBook = await krakenito.getOrderBook(asset,undefined, 5)
+    res.send(orderBook)
+})
+
 app.delete('/deleteConnection/:id',async (req: any, res: any) => {
     const id = req.params.id
 
@@ -233,6 +240,23 @@ app.post('/sell',async (req : any, res : any) => {
 
         return res.json({sold: sold});
     }
+})
+
+app.post('/order', async(req: any, res: any) => {
+    const orderType = req.body.orderType
+    const type = req.body.type
+    const volume = req.body.volume
+    const pair = req.body.pair
+
+    krakenita.addOrder(orderType,type,volume,pair)
+    await client.query({
+        text: `INSERT INTO public.transaction(TypeOperation, TypeDevise, Montant, Date)
+            VALUES ($1, $2, $3, $4);
+    `,
+        values: [orderType, pair, volume, new Date()]
+    })
+
+    return res.json({ok:true});
 })
 
 module.exports = router

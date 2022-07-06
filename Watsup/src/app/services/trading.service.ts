@@ -13,4 +13,23 @@ export class TradingService {
   getAssetsInfo(asset: string) {
     return this.http.get('http://localhost:3001/getAssetsInfo/'+ asset);
     }
+  getOrderBook(asset: string) {
+    return this.http.get('http://localhost:3001/getOrderBook/'+ asset);
+    }
+  sell(orderType: string, type: string, volume: string, pair: string) {
+    return this.http.post('http://localhost:3001/order', {
+      orderType: orderType,
+      type: type,
+      volume: volume,
+      pair: pair
+    });
   }
+  buy(orderType: string, type: string, volume: string, pair: string) {
+    return this.http.post('http://localhost:3001/order', {
+      orderType: orderType,
+      type: type,
+      volume: volume,
+      pair: pair
+    });
+  }
+}
