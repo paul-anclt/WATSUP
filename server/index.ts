@@ -138,6 +138,12 @@ app.get('/getAssetsInfo/:asset', async(req: any, res: any) => {
     res.send(informations)
 })
 
+app.get('/getOrderBook/:asset', async(req: any, res: any) => {
+    const asset = req.params.asset
+    var orderBook = await krakenito.getOrderBook(asset,undefined, 5)
+    res.send(orderBook)
+})
+
 app.delete('/deleteConnection/:id',async (req: any, res: any) => {
     const id = req.params.id
 
