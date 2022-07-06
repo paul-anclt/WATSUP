@@ -6,7 +6,8 @@
     "express": "^4.18.1",
     "node-kraken-api": "^2.2.2",
     "pg": "^8.7.3",
-    "ts-node": "^10.8.2"
+    "ts-node": "^10.8.2",
+    "@binance/connector": "^1.10.0"
   },
   "devDependencies": {
     "typescript": "^4.7.4"
