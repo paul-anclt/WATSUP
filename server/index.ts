@@ -17,10 +17,12 @@ app.use(cors(corsOptions));
 
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
+import { BinanceAPI } from "./binance";
 import { KrakenAPI, KrakenPublic } from "./kraken";
 var krakenito = new KrakenPublic()
 var krakenita = new KrakenAPI("key","secret")
-
+const binance_1 = require("./binance")
+const binancito = new BinanceAPI()
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -139,7 +141,19 @@ app.get('/getAssetsInfo/:asset', async(req: any, res: any) => {
     var informations = await krakenito.getAssetsInfo(asset)
     res.send(informations)
 })
+app.get('/userPlateformes/:id', async(req: any, res: any) => {
+    const idUser = req.params.id;
+    const result = await client.query({
+        text: 'SELECT nomplateforme FROM plateforme WHERE idplateforme in (select idplateforme from connecter where iduser=$1)',
+        values: [idUser]
+    });
+    res.json(result.rows);
+});
 
+app.get('/getBalanceInfo', async(req: any, res: any) => {
+    var balance = await binancito.balance();
+    res.send(balance);
+});
 app.get('/getOrderBook/:asset', async(req: any, res: any) => {
     const asset = req.params.asset
     var orderBook = await krakenito.getOrderBook(asset,undefined, 5)
