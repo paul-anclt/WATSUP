@@ -68,7 +68,7 @@ export class StatistiqueComponent implements OnInit {
       [12, 6.6, 8.4, 5.2],
     ],
 
-    columnNames: ['LTC', 'Ethereum', 'BUSD', 'Bitcoin'],
+    columnNames: ['LTC', 'Ethereum', 'USDT', 'Bitcoin'],
     options: {
       hAxis: {
         title: 'Evaluation de votre cryptomonnaie sur 12 mois',
@@ -98,13 +98,11 @@ export class StatistiqueComponent implements OnInit {
   pieData: any = {
     type: 'PieChart',
     data: [
-      ['Bitcoin', 5.2],
+      ['Bitcoin', 69703.5],
 
-      ['Dogecoin', 2.8],
+      ['Ethereum', 9633.8],
 
-      ['Ethereum', 1.2],
-
-      ['BUSD', 0.8],
+      ['USDT', 475.5714],
     ],
     options: {
       title:
