@@ -24,6 +24,7 @@ import { FakeTradingDialogComponent } from './dialog/fake-trading-dialog/fake-tr
 
 import { StatistiqueComponent } from './statistique/statistique.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { GoogleChartsModule } from 'angular-google-charts';
     VarDirective,
     FakeTradingDialogComponent,
 
-    StatistiqueComponent
+    StatistiqueComponent,
+    DashboardComponent
 
   ],
   imports: [

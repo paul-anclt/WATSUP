@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BinanceAPI = void 0;
 const { Spot } = require('@binance/connector');
 class BinanceAPI {
     constructor() {
@@ -63,4 +64,4 @@ class BinanceAPI {
         });
     }
 }
-exports.default = { BinanceAPI };
+exports.BinanceAPI = BinanceAPI;
