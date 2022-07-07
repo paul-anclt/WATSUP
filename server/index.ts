@@ -37,53 +37,57 @@ app.listen(3001, function(){
 })
 
 app.post('/login', async (req: any, res: any) => {
+    const nom =''
+    const prenom=''
     const email = req.body.email
     const password = req.body.password
 
     const result = await client.query({
         text: 'SELECT * FROM utilisateur WHERE email=$1',
         values: [email]
-    })
-
+    });
     if (result.rows.length === 0) {
         res.status(401).json({
             message: 'user doesnt exist'
-        })
-        return
+        });
+        return;
     }
     // si on a pas trouv� l'utilisateur
     // alors on le cr�e
-    const user = result.rows[0]
-
+    const user = result.rows[0];
     if (await bcrypt.compare(password, user.password)) {
         // alors connecter l'utilisateur
         //req.session.userId = user.id
         res.json({
             id: user.iduser,
+            nom: user.nom,
+            prenom: user.prenom,
             email: user.email
-        })
-    } else {
+        });
+    }
+    else {
         res.status(401).json({
             message: 'bad password'
-        })
-        return
+        });
+        return;
     }
 })
 
 app.post('/register', async (req: any, res: any) => {
+    const nom = req.body.nom
+    const prenom = req.body.prenom
     const email = req.body.email
     const password = req.body.password
 
     const result = await client.query({
         text: 'SELECT * FROM utilisateur WHERE email=$1',
         values: [email]
-    })
-
+    });
     if (result.rows.length > 0) {
         res.status(401).json({
             message: 'user already exists'
-        })
-        return
+        });
+        return;
     }
     // si on a pas trouv� l'utilisateur
     // alors on le cr�e
@@ -91,10 +95,10 @@ app.post('/register', async (req: any, res: any) => {
     const hash = await bcrypt.hash(password, 10)
 
     await client.query({
-        text: `INSERT INTO utilisateur(email, password)
-    VALUES ($1, $2)
+        text: `INSERT INTO utilisateur(nom,prenom,email, password)
+    VALUES ($1, $2, $3, $4)
     `,
-        values: [email, hash]
+        values: [nom,prenom, email, hash]
     })
     return res.json({ok:true});
     

@@ -38,6 +38,8 @@ app.listen(3001, function () {
     console.log("Node Js Server is Running");
 });
 app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = '';
+    const prenom = '';
     const email = req.body.email;
     const password = req.body.password;
     const result = yield client.query({
@@ -58,6 +60,8 @@ app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         //req.session.userId = user.id
         res.json({
             id: user.iduser,
+            nom: user.nom,
+            prenom: user.prenom,
             email: user.email
         });
     }
@@ -69,6 +73,8 @@ app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 app.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
     const email = req.body.email;
     const password = req.body.password;
     const result = yield client.query({
@@ -85,10 +91,10 @@ app.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     // alors on le cr�e
     const hash = yield bcrypt.hash(password, 10);
     yield client.query({
-        text: `INSERT INTO utilisateur(email, password)
-    VALUES ($1, $2)
+        text: `INSERT INTO utilisateur(nom,prenom,email, password)
+    VALUES ($1, $2, $3, $4)
     `,
-        values: [email, hash]
+        values: [nom, prenom, email, hash]
     });
     return res.json({ ok: true });
 }));

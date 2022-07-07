@@ -11,7 +11,11 @@
         <label><b>Mot de passe</b></label>
         <input type="password" placeholder="Entrer le mot de passe" [(ngModel)]="password" name="password" required>
 
-        <button (click)="connectUserWithAPI()">Se connecter</button>
+        <div class="grid grid-cols-2">
+            <button (click)="connectUserWithAPI()">Se connecter</button>
+            <button routerLink="/register">S'inscrire</button>
+        </div>
+
     </form>
 </div>
 
