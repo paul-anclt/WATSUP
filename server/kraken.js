@@ -160,7 +160,7 @@ class KrakenAPI {
      */
     addOrder(orderType, type, volume, pair, price, price2) {
         return __awaiter(this, void 0, void 0, function* () {
-            const order = yield this.privateKraken.addOrder({ ordertype: orderType, type: type, pair: pair, price: price, price2: price2 });
+            const order = yield this.privateKraken.addOrder({ ordertype: orderType, type: type, volume: volume, pair: pair, price: price, price2: price2 });
             return order;
         });
     }

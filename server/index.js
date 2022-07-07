@@ -24,8 +24,12 @@ app.use(bp.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
+const binance_2 = require("./binance");
 const kraken_1 = require("./kraken");
 var krakenito = new kraken_1.KrakenPublic();
+var krakenita = new kraken_1.KrakenAPI("key", "secret");
+const binance_1 = require("./binance");
+const binancito = new binance_2.BinanceAPI();
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -37,6 +41,8 @@ app.listen(3001, function () {
     console.log("Node Js Server is Running");
 });
 app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = '';
+    const prenom = '';
     const email = req.body.email;
     const password = req.body.password;
     const result = yield client.query({
@@ -57,6 +63,8 @@ app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         //req.session.userId = user.id
         res.json({
             id: user.iduser,
+            nom: user.nom,
+            prenom: user.prenom,
             email: user.email
         });
     }
@@ -68,6 +76,8 @@ app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 app.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
     const email = req.body.email;
     const password = req.body.password;
     const result = yield client.query({
@@ -84,10 +94,10 @@ app.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     // alors on le cr�e
     const hash = yield bcrypt.hash(password, 10);
     yield client.query({
-        text: `INSERT INTO utilisateur(email, password)
-    VALUES ($1, $2)
+        text: `INSERT INTO utilisateur(nom,prenom,email, password)
+    VALUES ($1, $2, $3, $4)
     `,
-        values: [email, hash]
+        values: [nom, prenom, email, hash]
     });
     return res.json({ ok: true });
 }));
@@ -122,6 +132,18 @@ app.get('/getAssetsInfo/:asset', (req, res) => __awaiter(void 0, void 0, void 0,
     const asset = req.params.asset;
     var informations = yield krakenito.getAssetsInfo(asset);
     res.send(informations);
+}));
+app.get('/userPlateformes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idUser = req.params.id;
+    const result = yield client.query({
+        text: 'SELECT nomplateforme FROM plateforme WHERE idplateforme in (select idplateforme from connecter where iduser=$1)',
+        values: [idUser]
+    });
+    res.json(result.rows);
+}));
+app.get('/getBalanceInfo', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var balance = yield binancito.balance();
+    res.send(balance);
 }));
 app.get('/getOrderBook/:asset', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const asset = req.params.asset;
@@ -206,5 +228,19 @@ app.post('/sell', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         return res.json({ sold: sold });
     });
+}));
+app.post('/order', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const orderType = req.body.orderType;
+    const type = req.body.type;
+    const volume = req.body.volume;
+    const pair = req.body.pair;
+    krakenita.addOrder(orderType, type, volume, pair);
+    yield client.query({
+        text: `INSERT INTO public.transaction(TypeOperation, TypeDevise, Montant, Date)
+            VALUES ($1, $2, $3, $4);
+    `,
+        values: [orderType, pair, volume, new Date()]
+    });
+    return res.json({ ok: true });
 }));
 module.exports = router;

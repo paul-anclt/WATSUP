@@ -17,10 +17,12 @@ app.use(cors(corsOptions));
 
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
+import { BinanceAPI } from "./binance";
 import { KrakenAPI, KrakenPublic } from "./kraken";
 var krakenito = new KrakenPublic()
 var krakenita = new KrakenAPI("key","secret")
-
+const binance_1 = require("./binance")
+const binancito = new BinanceAPI()
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -37,53 +39,57 @@ app.listen(3001, function(){
 })
 
 app.post('/login', async (req: any, res: any) => {
+    const nom =''
+    const prenom=''
     const email = req.body.email
     const password = req.body.password
 
     const result = await client.query({
         text: 'SELECT * FROM utilisateur WHERE email=$1',
         values: [email]
-    })
-
+    });
     if (result.rows.length === 0) {
         res.status(401).json({
             message: 'user doesnt exist'
-        })
-        return
+        });
+        return;
     }
     // si on a pas trouv� l'utilisateur
     // alors on le cr�e
-    const user = result.rows[0]
-
+    const user = result.rows[0];
     if (await bcrypt.compare(password, user.password)) {
         // alors connecter l'utilisateur
         //req.session.userId = user.id
         res.json({
             id: user.iduser,
+            nom: user.nom,
+            prenom: user.prenom,
             email: user.email
-        })
-    } else {
+        });
+    }
+    else {
         res.status(401).json({
             message: 'bad password'
-        })
-        return
+        });
+        return;
     }
 })
 
 app.post('/register', async (req: any, res: any) => {
+    const nom = req.body.nom
+    const prenom = req.body.prenom
     const email = req.body.email
     const password = req.body.password
 
     const result = await client.query({
         text: 'SELECT * FROM utilisateur WHERE email=$1',
         values: [email]
-    })
-
+    });
     if (result.rows.length > 0) {
         res.status(401).json({
             message: 'user already exists'
-        })
-        return
+        });
+        return;
     }
     // si on a pas trouv� l'utilisateur
     // alors on le cr�e
@@ -91,10 +97,10 @@ app.post('/register', async (req: any, res: any) => {
     const hash = await bcrypt.hash(password, 10)
 
     await client.query({
-        text: `INSERT INTO utilisateur(email, password)
-    VALUES ($1, $2)
+        text: `INSERT INTO utilisateur(nom,prenom,email, password)
+    VALUES ($1, $2, $3, $4)
     `,
-        values: [email, hash]
+        values: [nom,prenom, email, hash]
     })
     return res.json({ok:true});
     
@@ -139,7 +145,19 @@ app.get('/getAssetsInfo/:asset', async(req: any, res: any) => {
     var informations = await krakenito.getAssetsInfo(asset)
     res.send(informations)
 })
+app.get('/userPlateformes/:id', async(req: any, res: any) => {
+    const idUser = req.params.id;
+    const result = await client.query({
+        text: 'SELECT nomplateforme FROM plateforme WHERE idplateforme in (select idplateforme from connecter where iduser=$1)',
+        values: [idUser]
+    });
+    res.json(result.rows);
+});
 
+app.get('/getBalanceInfo', async(req: any, res: any) => {
+    var balance = await binancito.balance();
+    res.send(balance);
+});
 app.get('/getOrderBook/:asset', async(req: any, res: any) => {
     const asset = req.params.asset
     var orderBook = await krakenito.getOrderBook(asset,undefined, 5)
