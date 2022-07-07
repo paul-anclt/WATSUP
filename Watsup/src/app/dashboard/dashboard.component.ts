@@ -40,7 +40,14 @@ export class DashboardComponent implements OnInit {
   getUsersPlateformes(){
     this.dashboardService.userPlateformes(this.userService.user.id).subscribe(res => {
       this.plateformes = res;
-      console.log(this.tab)
+      console.log(res)
+    })
+  }
+
+  getBalanceInfo(){
+    this.dashboardService.getBalanceInfo().subscribe(res => {
+      this.plateformes = res;
+      console.log(res)
     })
   }
 

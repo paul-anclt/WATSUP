@@ -24,9 +24,8 @@ app.use(bp.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 const bcrypt = require('bcrypt');
 const { Client } = require('pg');
-const binance_1 = require("./binance");
+const binance_1 = require("./binance")
 const kraken_1 = require("./kraken");
-var binancito = new binance_1.BinanceAPI();
 var krakenito = new kraken_1.KrakenPublic();
 const client = new Client({
     user: 'postgres',
@@ -115,9 +114,9 @@ app.get('/userPlateformes/:id', (req, res) => __awaiter(void 0, void 0, void 0, 
     });
     res.json(result.rows);
 }));
-app.get('/getBalanceInfo/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var balance = yield krakenito.getAssetsInfo(asset);
-    res.send(informations);
+app.get('/getBalanceInfo', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var balance = yield binancito.balance();
+    res.send(balance);
 }));
 app.post('/addConnection', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idPlateforme = req.body.idPlateforme;

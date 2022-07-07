@@ -212,8 +212,8 @@
                 Price
             </div>
         </div>
-        <div class="flex mt-2">
-            <div class="font-poppins text-watsup-text-secondary  w-8/12 ">
+        <div class="flex mt-2" [routerLink]="['/trading']"        >
+            <div routerLink="trading" class="font-poppins text-watsup-text-secondary  w-8/12 ">
                 Bitcoin (BTC)
             </div>
             <div class="font-poppins text-watsup-text-secondary  w-5/12">
@@ -226,8 +226,8 @@
                 USD ${{res.c[0]}}
             </div>
         </div>
-        <div class="flex mt-2">
-            <div class="font-poppins text-watsup-text-secondary  w-8/12 ">
+        <div class="flex mt-2" routerLink="trading">
+            <div  class="font-poppins text-watsup-text-secondary  w-8/12 cursor-pointer">
                 Ethereum(ETH)
             </div>
             <div class="font-poppins text-watsup-text-secondary  w-5/12">

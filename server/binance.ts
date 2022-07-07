@@ -64,4 +64,4 @@ class BinanceAPI {
 
 }
 
-export default { BinanceAPI };
+export { BinanceAPI };
