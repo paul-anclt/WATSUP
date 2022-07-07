@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
+import { StatistiqueService } from '../services/statistique.service';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+
 declare var google: any;
 
 @Component({
@@ -6,7 +10,46 @@ declare var google: any;
   templateUrl: './statistique.component.html',
   styleUrls: ['./statistique.component.css'],
 })
-export class StatistiqueComponent {
+export class StatistiqueComponent implements OnInit {
+
+  res : any ;
+  res2 : any;
+  res3 : any;
+  plateformes : any;
+  tab : [];
+
+  constructor(private statistiqueService: StatistiqueService, private route: Router, private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.getAssetsInfo()
+    this.getUsersPlateformes()
+  }
+
+  getAssetsInfo() {
+    this.statistiqueService.getAssetsInfo("BTC").subscribe(response => {
+      this.res = response[Object.keys(response)[0]];
+      console.log(response);
+    })
+
+    this.statistiqueService.getAssetsInfo("ETH").subscribe(response => {
+      this.res2 = response[Object.keys(response)[0]];
+      console.log(response);
+    })
+
+    this.statistiqueService.getAssetsInfo("USDT").subscribe(response => {
+      this.res3 = response[Object.keys(response)[0]];
+      console.log(response);
+    })
+
+  }
+
+  getUsersPlateformes(){
+    this.statistiqueService.userPlateformes(this.userService.user.id).subscribe(res => {
+      this.plateformes = res;
+      console.log(this.tab)
+    })
+  }
+
   title = 'Watsup';
   chartData: any = {
     type: 'LineChart',
@@ -49,8 +92,8 @@ export class StatistiqueComponent {
       color: 'white',
     },
 
-    width: 700,
-    height: 500,
+    width: 900,
+    height: 300,
   };
   pieData: any = {
     type: 'PieChart',
@@ -74,7 +117,7 @@ export class StatistiqueComponent {
         bold: 'true',
         color: 'black',
       },
-      width: 500,
+      width: 600,
       height: 300,
     },
   };
