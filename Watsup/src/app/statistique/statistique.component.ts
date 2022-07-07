@@ -68,7 +68,7 @@ export class StatistiqueComponent implements OnInit {
       [12, 6.6, 8.4, 5.2],
     ],
 
-    columnNames: ['LTC', 'Ethereum', 'USDT', 'Bitcoin'],
+    columnNames: ['LTC', 'Ethereum', 'Bitcoin', 'USDT'],
     options: {
       hAxis: {
         title: 'Evaluation de votre cryptomonnaie sur 12 mois',
