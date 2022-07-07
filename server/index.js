@@ -36,16 +36,13 @@ const client = new Client({
 client.connect();
 app.listen(3001, function () {
     console.log("Node Js Server is Running");
-
-})
-
-app.post('/login', async (req, res) => {
-    const nom =''
-    const prenom=''
-    const email = req.body.email
-    const password = req.body.password
-
-    const result = await client.query({
+});
+app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = '';
+    const prenom = '';
+    const email = req.body.email;
+    const password = req.body.password;
+    const result = yield client.query({
         text: 'SELECT * FROM utilisateur WHERE email=$1',
         values: [email]
     });
@@ -74,15 +71,13 @@ app.post('/login', async (req, res) => {
         });
         return;
     }
-})
-
-app.post('/register', async (req, res) => {
-    const nom = req.body.nom
-    const prenom = req.body.prenom
-    const email = req.body.email
-    const password = req.body.password
-
-    const result = await client.query({
+}));
+app.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const nom = req.body.nom;
+    const prenom = req.body.prenom;
+    const email = req.body.email;
+    const password = req.body.password;
+    const result = yield client.query({
         text: 'SELECT * FROM utilisateur WHERE email=$1',
         values: [email]
     });
@@ -94,18 +89,15 @@ app.post('/register', async (req, res) => {
     }
     // si on a pas trouv� l'utilisateur
     // alors on le cr�e
-
-    const hash = await bcrypt.hash(password, 10)
-
-    await client.query({
+    const hash = yield bcrypt.hash(password, 10);
+    yield client.query({
         text: `INSERT INTO utilisateur(nom,prenom,email, password)
     VALUES ($1, $2, $3, $4)
     `,
-        values: [nom,prenom, email, hash]
-    })
-    return res.json({ok:true});
-    
-})
+        values: [nom, prenom, email, hash]
+    });
+    return res.json({ ok: true });
+}));
 app.get('/userConnections/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idUser = req.params.id;
     const result = yield client.query({
