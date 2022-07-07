@@ -25,6 +25,7 @@ const bcrypt = require('bcrypt');
 const { Client } = require('pg');
 const kraken_1 = require("./kraken");
 var krakenito = new kraken_1.KrakenPublic();
+var krakenita = new kraken_1.KrakenAPI("key", "secret");
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -133,6 +134,20 @@ app.delete('/deleteConnection/:id', (req, res) => __awaiter(void 0, void 0, void
         text: `DELETE FROM connecter
         WHERE idConnecter=$1;`,
         values: [id]
+    });
+    return res.json({ ok: true });
+}));
+app.post('/order', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const orderType = req.body.orderType;
+    const type = req.body.type;
+    const volume = req.body.volume;
+    const pair = req.body.pair;
+    krakenita.addOrder(orderType, type, volume, pair);
+    yield client.query({
+        text: `INSERT INTO public.transaction(TypeOperation, TypeDevise, Montant, Date)
+            VALUES ($1, $2, $3, $4);
+    `,
+        values: [orderType, pair, volume, new Date()]
     });
     return res.json({ ok: true });
 }));

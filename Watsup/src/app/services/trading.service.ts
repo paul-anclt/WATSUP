@@ -17,6 +17,7 @@ export class TradingService {
     return this.http.get('http://localhost:3001/getOrderBook/'+ asset);
     }
   sell(orderType: string, type: string, volume: string, pair: string) {
+    alert("Ordre de vente passé")
     return this.http.post('http://localhost:3001/order', {
       orderType: orderType,
       type: type,
@@ -25,6 +26,7 @@ export class TradingService {
     });
   }
   buy(orderType: string, type: string, volume: string, pair: string) {
+    alert("Ordre d'achat passé")
     return this.http.post('http://localhost:3001/order', {
       orderType: orderType,
       type: type,
