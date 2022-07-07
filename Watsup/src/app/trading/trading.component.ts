@@ -1,4 +1,4 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, ElementRef, NgModule, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { TradingService } from '../services/trading.service';
